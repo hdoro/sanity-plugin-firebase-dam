@@ -23,6 +23,7 @@ const useUpload = ({
   accept,
   vendorConfig,
   storeOriginalFilename = true,
+  readOnly,
   onSuccess,
   removeFile,
 }: UploaderProps): useUploadReturn => {
@@ -140,6 +141,7 @@ const useUpload = ({
     accept,
     // Only allow 1 file to be uploaded
     maxFiles: 1,
+    disabled: readOnly,
   })
 
   function cancelUpload() {
