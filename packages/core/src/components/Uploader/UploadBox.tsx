@@ -23,7 +23,7 @@ const UploadBox: React.FC<UploadBox> = (props) => {
     isDragReject,
     isDragAccept,
   } = dropzone
-  console.log('box', readOnly)
+
   const metadataStates = ['extractingVideoMetadata', 'extractingAudioMetadata']
   const uploadingStates = ['uploadingToVendor', 'uploadingToSanity']
   const loadingStates = [...metadataStates, ...uploadingStates]
