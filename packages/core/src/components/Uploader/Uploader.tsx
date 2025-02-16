@@ -14,6 +14,10 @@ export interface UploaderProps {
 
   // CONFIGURATION
   /**
+   * Native sanity readOnly field
+   */
+  readOnly?: boolean
+  /**
    * MIME file type
    */
   accept?: Accept
@@ -38,6 +42,8 @@ export interface UploaderProps {
 }
 
 const Uploader: React.FC<UploaderProps> = (props) => {
+  const { readOnly } = props
+
   const uploadProps = useUpload(props)
   const {
     dropzone: { inputRef, getInputProps },
@@ -58,6 +64,7 @@ const Uploader: React.FC<UploaderProps> = (props) => {
         ) : (
           <UploadBox
             {...uploadProps}
+            readOnly={readOnly}
             vendorConfig={props.vendorConfig}
             onUploadClick={onUploadClick}
           />
@@ -72,6 +79,7 @@ const Uploader: React.FC<UploaderProps> = (props) => {
           }}
         >
           <Button
+            disabled={readOnly}
             icon={UploadIcon}
             fontSize={2}
             padding={3}
@@ -82,6 +90,7 @@ const Uploader: React.FC<UploaderProps> = (props) => {
           />
           {props.openBrowser && (
             <Button
+              disabled={readOnly}
               icon={SearchIcon}
               fontSize={2}
               padding={3}
@@ -93,6 +102,7 @@ const Uploader: React.FC<UploaderProps> = (props) => {
           )}
           {props.removeFile && props.chosenFile && (
             <Button
+              disabled={readOnly}
               icon={TrashIcon}
               fontSize={2}
               padding={3}

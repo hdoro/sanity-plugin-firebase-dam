@@ -16,7 +16,7 @@ import UploaderWithConfig from './Uploader/UploaderWithConfig'
  */
 export default function createInput(vendorConfig: VendorConfiguration) {
   return function ExternalDamInput(props: ObjectInputProps<SanityUpload>) {
-    const { onChange, value, schemaType } = props
+    const { onChange, value, schemaType, readOnly } = props
     const {
       accept = vendorConfig?.defaultAccept,
       storeOriginalFilename = true,
@@ -55,6 +55,7 @@ export default function createInput(vendorConfig: VendorConfiguration) {
         <ThemeProvider theme={studioTheme}>
           <UploaderWithConfig
             accept={accept}
+            readOnly={readOnly}
             storeOriginalFilename={storeOriginalFilename}
             onSuccess={updateValue}
             chosenFile={uploadedFile || value}

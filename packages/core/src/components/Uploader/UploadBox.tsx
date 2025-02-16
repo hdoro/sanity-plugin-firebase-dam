@@ -8,11 +8,13 @@ import { useUploadReturn } from './useUpload'
 
 interface UploadBox extends useUploadReturn {
   onUploadClick: () => void
+  readOnly?: boolean
   vendorConfig: VendorConfiguration
 }
 
 const UploadBox: React.FC<UploadBox> = (props) => {
-  const { dropzone, state, cancelUpload, retry, onUploadClick } = props
+  const { dropzone, state, readOnly, cancelUpload, retry, onUploadClick } =
+    props
   const {
     inputRef,
     getRootProps,
@@ -21,7 +23,7 @@ const UploadBox: React.FC<UploadBox> = (props) => {
     isDragReject,
     isDragAccept,
   } = dropzone
-
+  console.log('box', readOnly)
   const metadataStates = ['extractingVideoMetadata', 'extractingAudioMetadata']
   const uploadingStates = ['uploadingToVendor', 'uploadingToSanity']
   const loadingStates = [...metadataStates, ...uploadingStates]
@@ -65,7 +67,9 @@ const UploadBox: React.FC<UploadBox> = (props) => {
         ref={inputRef}
         id="drop-file"
         {...getInputProps()}
-        disabled={!['idle', 'retry', 'failure'].includes(state.value as any)}
+        disabled={
+          readOnly || !['idle', 'retry', 'failure'].includes(state.value as any)
+        }
       />
       <Stack space={3}>
         {state.value === 'failure' && (
@@ -110,9 +114,16 @@ const UploadBox: React.FC<UploadBox> = (props) => {
         {state.value === 'idle' && (
           <>
             {!isDragActive && (
-              <UploadIcon style={{ margin: '0 auto' }} fontSize={40} />
+              <UploadIcon
+                style={{ margin: '0 auto', opacity: readOnly ? 0.5 : 1 }}
+                fontSize={40}
+              />
             )}
-            <Text weight="bold" muted={isDragActive}>
+            <Text
+              weight="bold"
+              muted={isDragActive}
+              style={{ opacity: readOnly ? 0.5 : 1 }}
+            >
               {isDragActive ? 'Drop to upload' : 'Drag file or click here'}
             </Text>
           </>

@@ -127,6 +127,7 @@ const ConfigureCredentials: React.FC<{
                 )
                 return (
                   <FormField
+                    key={`${field.name}-${field.type}`}
                     label={field.title || field.name}
                     description={field.description}
                     markers={fieldMarkers}
